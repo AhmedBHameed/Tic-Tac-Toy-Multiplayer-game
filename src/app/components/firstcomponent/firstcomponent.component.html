@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <small>Available players: </small>
+                <i>
+                    <small>{{playersCount}}</small>
+                </i>
+            </div>
+            <div>
+                <small>Game status: </small>
+                <i>
+                    <small *ngIf="!isApplied">Type your name.</small>
+                    <small *ngIf="!player2.name && isApplied">Wait for the second player.</small>
+                    <small *ngIf="player2.name">Game started, </small>
+                    <small *ngIf="player1.myTurn == true">Your turn</small>
+                    <small *ngIf="player1.myTurn == false">Next player turn</small>
+                </i>
+            </div>
+            <div *ngIf="player1.name && player2.name">
+                <div>
+                    <small>Your score:
+                        <i>{{p1.score}}</i>
+                    </small>
+                </div>
+                <div>
+                    <small>{{player2.name}} score:
+                        <i>{{p2.score}}</i>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!isGameInitiated" class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="mx-auto start-game-container">
+        <input type="text" [(ngModel)]="player1.name" placeholder="Type your name">
+        <input type="button" (click)="startTheGame()" [disabled]="isApplied" value="Start game">
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="mx-auto start-game-container">
+        <div class="mx-auto">
+          <div class="seq player-color X" (click)="selectPlayerColor('X')"></div>
+          <div class="seq player-color O" (click)="selectPlayerColor('O')"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isGameInitiated" class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="mx-auto tictac-container">
+        <div class="seq-0-0" (click)="paintSequare(0,0)"></div>
+        <div class="seq-0-1" (click)="paintSequare(0,1)"></div>
+        <div class="seq-0-2" (click)="paintSequare(0,2)"></div>
+        <div class="seq-1-0" (click)="paintSequare(1,0)"></div>
+        <div class="seq-1-1" (click)="paintSequare(1,1)"></div>
+        <div class="seq-1-2" (click)="paintSequare(1,2)"></div>
+        <div class="seq-2-0" (click)="paintSequare(2,0)"></div>
+        <div class="seq-2-1" (click)="paintSequare(2,1)"></div>
+        <div class="seq-2-2" (click)="paintSequare(2,2)"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isGameInitiated" class="container">
+    <div class="row">
+      <div class="mx-auto col-8">
+          <div class="chat-container">
+                <div class="messages">
+                    <span *ngFor="let message of messages" class="message">{{message}}</span>
+                </div>
+                <div class="chat-footer">
+                    <input type="text" [(ngModel)]="player1.message" placeholder="Type anything and send">
+                    <input type="button" (click)="send()" value="Send">
+                </div>
+          </div>
+      </div>
+    </div>
+</div>
