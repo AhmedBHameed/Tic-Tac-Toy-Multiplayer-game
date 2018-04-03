@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 
 import { TictacService } from '../../services/tictac.service';
+import { environment } from '../../../environments/environment';
 
 declare let io: any;
 @Component({
@@ -60,7 +61,7 @@ export class FirstcomponentComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.player1.sourceIp = this.tictacservice.uuidv4();
     this.player1.isConnected = true;
-    this.socket = io('http://localhost:3000/');
+    this.socket = io(environment.backendApi);
 
     this.socket.on('serverInformations', (count: number) => {
       this.playersCount = count;
@@ -128,7 +129,7 @@ export class FirstcomponentComponent implements OnInit, AfterViewInit {
     this.player1.nextPos = null;
     this.socket.emit('game', this.player1);
     this.showMessageOnChat(this.player1.message, true);
-    this.player1.message = '';
+    this.player1.message = null;
   }
   showMessageOnChat(message: string, isMyMessage: boolean) {
     if (isMyMessage) {
